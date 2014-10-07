@@ -4,6 +4,12 @@
 - Run `ansible-galaxy install -r provisioning/requirements.txt --force`
 - Run `vagrant plugin install vagrant-cachier`
 
+#Includes
+- PHP 5.5
+- Mariadb
+- Solr 4.x
+- Nginx
+
 #SSH Forwarding
 
 1. Add the following to your .ssh/config:
