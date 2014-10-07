@@ -1,0 +1,19 @@
+nginx_sites:
+  example.drupal.dev:
+    - listen 80
+    - server_name example.drupal.dev
+    - root /var/www/example.drupal.dev
+    - location / {
+        index index.php index.htm;
+        try_files $uri $uri/ @rewrite;
+      }
+    - location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+      }
+    - location @rewrite {
+        rewrite ^/(.*)$ /index.php?q=$1;
+      }

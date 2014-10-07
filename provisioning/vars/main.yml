@@ -1,0 +1,44 @@
+php_enable_php_fpm: true
+php_webserver_daemon: "nginx"
+php_memory_limit: "256M"
+php_max_execution_time: "90"
+php_upload_max_filesize: "256M"
+php_packages:
+  - php5
+  - php5-fpm
+  - php5-cli
+  - php5-gd
+  - php5-common
+  - php5-mysql
+rvm1_rubies:
+  - 'ruby-1.9.3'
+rvm1_install_flags: '--auto-dotfiles --user-install'
+rvm1_install_path: '/home/{{ ansible_ssh_user }}/.rvm'
+
+nginx_sites:
+  test.drupal.dev:
+    - listen 80
+    - server_name test.drupal.dev
+    - root /var/www/test.drupal.dev
+    - location / {
+        index index.php index.htm;
+        try_files $uri $uri/ @rewrite;
+      }
+    - location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+      }
+    - location @rewrite {
+        rewrite ^/(.*)$ /index.php?q=$1;
+      }
+
+nginx_configs:
+  proxy:
+    - proxy_set_header X-Real-IP  $remote_addr
+    - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+  gzip:
+    - gzip on
+    - gzip_disable msie6

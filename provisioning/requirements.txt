@@ -1,0 +1,4 @@
+geerlingguy.drush
+rvm_io.rvm1-ruby
+jdauphant.nginx
+geerlingguy.solr

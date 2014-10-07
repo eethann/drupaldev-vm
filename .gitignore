@@ -1,0 +1,4 @@
+.vagrant
+sites
+files/*.sql
+sites.yml
