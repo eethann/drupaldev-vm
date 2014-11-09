@@ -21,10 +21,11 @@
     - { role: common }
     - { role: ansible-mariadb55 }
     - { role: jdauphant.nginx }
-    - { role: geerlingguy.php }
+    - { role: geerlingguy.php, php_webserver_daemon: "nginx" }
     - { role: geerlingguy.drush }
-    - { role: rvm_io.rvm1-ruby, tags: ruby, sudo: True }
+#    - { role: rvm_io.rvm1-ruby, tags: ruby, sudo: True }
     - { role: geerlingguy.solr }
+    - { role: geerlingguy.php-xdebug }
   handlers:
     - name: update repositories
       apt: update_cache=yes cache_valid_time=3600

@@ -10,6 +10,7 @@ php_packages:
   - php5-gd
   - php5-common
   - php5-mysql
+  - php5-dev
 rvm1_rubies:
   - 'ruby-1.9.3'
 rvm1_install_flags: '--auto-dotfiles --user-install'
@@ -42,3 +43,8 @@ nginx_configs:
   gzip:
     - gzip on
     - gzip_disable msie6
+
+php_xdebug_idekey: PHPSTORM
+php_xdebug_remote_connect_back: "true"
+php_xdebug_remote_host: localhost
+php_xdebug_remote_port: "9000"
