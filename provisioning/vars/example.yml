@@ -17,3 +17,7 @@ nginx_sites:
     - location @rewrite {
         rewrite ^/(.*)$ /index.php?q=$1;
       }
+mysql_dbs:
+  database_name:
+    user: db_user
+    pass: db_pass

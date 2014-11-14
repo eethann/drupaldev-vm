@@ -14,13 +14,21 @@
       shell: chmod 777 /var/www
     - name: Create ssh config file
       template: src=../files/config dest=/home/vagrant/.ssh/config owner=vagrant group=vagrant mode=0644
-    - name: Set RVM permissions
-      shell: chown vagrant:vagrant /home/vagrant/.rvm -R
-      when: rvmpath.stat.isdir == true
+    # - name: Set RVM permissions
+    #  shell: chown vagrant:vagrant /home/vagrant/.rvm -R
+    #  when: rvmpath.stat.isdir == true
+    - name: Create Databases
+      mysql_db: name={{ item }} state=present login_user="root" login_password={{ mariadb_root_password }}
+      with_items: mysql_dbs.keys()
+      tags: db
+    - name: Create DB Users
+      mysql_user: name={{ item.value.user }} password={{ item.value.pass }} priv="{{ item.key }}.*:ALL" login_user="root" login_password={{ mariadb_root_password }}
+      tags: db
+      with_dict: mysql_dbs
   roles:
     - { role: common }
     - { role: ansible-mariadb55 }
-    - { role: jdauphant.nginx }
+    - { role: jdauphant.nginx, tags: nginx }
     - { role: geerlingguy.php, php_webserver_daemon: "nginx" }
     - { role: geerlingguy.drush }
 #    - { role: rvm_io.rvm1-ruby, tags: ruby, sudo: True }
