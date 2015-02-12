@@ -48,3 +48,5 @@ php_xdebug_idekey: PHPSTORM
 php_xdebug_remote_connect_back: "true"
 php_xdebug_remote_host: localhost
 php_xdebug_remote_port: "9000"
+
+mariadb_root_password: "pass"

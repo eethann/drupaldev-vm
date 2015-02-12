@@ -27,7 +27,7 @@
       with_dict: mysql_dbs
   roles:
     - { role: common }
-    - { role: ansible-mariadb55 }
+    - { role: ansible-mariadb55, mariadb_root_password: "{{ mariadb_root_password }}" }
     - { role: jdauphant.nginx, tags: nginx }
     - { role: geerlingguy.php, php_webserver_daemon: "nginx" }
     - { role: geerlingguy.drush }
